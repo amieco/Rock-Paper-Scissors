@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> Rock Paper Scissors</title>
+</head>
+
+<body>
+    
+    <h1>It's Rock Paper Scissors!</h1>
+    <h2>Make a Selection</h2>
+   
+    <button id= "Rock">Rock</button>
+    <button id= "Paper">Paper</button>
+    <button id= "Scissors">Scissors</button>
+    
+    <div id = "container"> </div>
+    
+    <script>
+        
+        let computerScore = 0;
+        let playerScore = 0;
+        let tie = 0;
+        let games = 0;
+        var computerChoice;
+        
+
+        ///set computer choice
+        function setComputerChoice() {
+            let list = ['Rock', 'Paper', 'Scissors']
+            let number = Math.floor(Math.random() * list.length)
+            computerChoice = list[number].toString();
+            
+        }
+        
+        
+        ///outputs score
+        function score() {
+            let yourScore = "Your score: " + playerScore
+            let compScore = "\nComputer score: " + computerScore
+            return yourScore + compScore
+       
+        }
+
+        //create a div for final result
+        const container = document.querySelector('#container');
+        const newDiv = document.createElement("div"); 
+
+        //function for final result    
+        function result() {
+            if (games % 5 == 0 && !games == 0){
+                
+            if (playerScore > computerScore) {
+                newDiv.textContent = "After 5 rounds: You WON!"
+                container.appendChild(newDiv)
+            }
+            else if (computerScore > playerScore) {
+                newDiv.textContent = "After 5 rounds: You LOST!"
+                container.appendChild(newDiv)
+            }
+            else {
+                newDiv.textContent = "After 5 rounds: It's a TIE!"
+                container.appendChild(newDiv)
+            }}
+            else if (games > 5 && !games % 5 == 0){
+                newDiv.remove();
+            }
+        
+        }
+
+
+        //new divs for each round output
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+
+        ///play a round, output each response, add to the score
+        function playRound(player, computer) {
+            if (player == computer) {
+                tie = tie + 1;
+                games --;
+                div1.textContent = player + "=" + computer + "  Its a TIE!";
+                container.appendChild(div1);
+            }
+            else if (player == "Rock") {
+                if (computer == "Scissors") {
+                    playerScore = playerScore + 1;
+                    div1.textContent =  "Rock crushes Scissors!!"; 
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+
+                }
+                else if (computer == "Paper") {
+                    computerScore = computerScore + 1;
+                    div1.textContent = "Rock is covered by Paper :( ";
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+                }
+            }
+            else if (player == "Paper") {
+                if (computer == "Rock") {
+                    playerScore = playerScore + 1;
+                    div1.textContent = "Paper covers Rock!!";
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+                }
+                else if (computer == "Scissors") {
+                    computerScore = computerScore + 1;
+                    div1.textContent = "Paper is cut by Scissors :( "; 
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+                }
+            }
+            else if (player == "Scissors") {
+                if (computer == "Paper") {
+                    playerScore = playerScore + 1;
+                    div1.textContent = "Scissors cuts Paper!!";
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+                }
+                else if (computer == "Rock") {
+                    computerScore = computerScore + 1;
+                    div1.textContent = "Scissors is crushed by Rock :( "
+                    div2.textContent = score().toString();
+                    container.appendChild(div1);
+                    container.appendChild(div2);
+                }
+            }
+            else {
+               div1.textContent = "Invalid response";
+               container.appendChild(div1);
+            }
+
+        }
+
+        
+        
+        // add event to buttons when clicked
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                setComputerChoice();
+                playRound(button.id, computerChoice),
+                games ++;
+                console.log(games);
+                result();
+            })
+        });
+     
+        
+        
+        
+
+
+    </script>
+</body>
+
+</html>
